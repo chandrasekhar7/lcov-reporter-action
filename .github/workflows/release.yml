@@ -1,9 +1,8 @@
 name: Create Release #
 on:
   push:
-    tags:
-      # Push events to matching v*, i.e. v1.0, v20.15.10
-      - 'v*'
+    branches:
+    - master
 
 jobs:
   build:
@@ -11,14 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@master
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+          node-version: 18
+      - name: install
+        run: npm install
+      - name: test
+        run: npm run test --passWithNoTests --coverage
+      - uses: romeovs/lcov-reporter-action@v0.2.16
+        with:
+          lcov-file: ./coverage/lcov.info
+      
