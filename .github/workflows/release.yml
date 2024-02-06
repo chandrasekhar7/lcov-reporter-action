@@ -18,7 +18,9 @@ jobs:
       - name: install
         run: npm install
       - name: test
-        run: npm run test -- --passWithNoTests --coverage
+        run: |
+          npm run test --passWithNoTests --coverage
+          ls -ltr
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed
