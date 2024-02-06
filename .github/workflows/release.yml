@@ -19,7 +19,9 @@ jobs:
         run: npm install
       - name: test
         run: npm run test --passWithNoTests --coverage
-      - uses: romeovs/lcov-reporter-action@v0.2.16
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v2
         with:
-          lcov-file: ./coverage/lcov.info
-      
+         name: test-results
+         path: ${{ github.workspace }}\coverage\lcov-report
+
