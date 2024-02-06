@@ -8,6 +8,8 @@ jobs:
   build:
     name: Create Release
     runs-on: ubuntu-latest
+    env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,7 +21,9 @@ jobs:
         run: npm install
       - name: test
         run: |
+          
           npm run test --passWithNoTests --coverage
+          
           ls -ltr
       - name: Test Report
         uses: dorny/test-reporter@v1
