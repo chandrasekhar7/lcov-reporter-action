@@ -32,6 +32,7 @@ jobs:
           name: JEST Tests            # Name of the check run which will be created
           path: ${{ github.workspace }}/coverage/clover.xml    # Path to test results
           reporter: jest-junit  
+          fail-on-error: true
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
         with:
